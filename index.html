@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title>C kan la lan</title>
+    </head>
+    <body>
+        <div style="text-align: center; font-family: sans-serif;">
+        <h2>Dans</h2>
+        <h1>50</h1>
+        <h2>jours</h2>
+        </div>
+
+        <script>
+            const debutDuProchainEvenement = new Date('2021-08-13');
+            const texteNombreDeJoursAvantLEvenement = document.getElementsByTagName('h1')[0];
+            
+            const aujourdhui = new Date();
+
+            const distance = debutDuProchainEvenement - aujourdhui;
+            const distanceEnJours = Math.ceil(((((distance / 1000) / 60) / 60) / 24));
+
+            texteNombreDeJoursAvantLEvenement.innerText = distanceEnJours;
+        </script>
+    </body>
+</html>
