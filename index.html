@@ -4,9 +4,35 @@
         <meta charset="utf-8">
         <title>C kan la lan</title>
         <style type="text/css">
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
             body > div:first-child {
-                text-align: center;
                 font-family: sans-serif;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+
+                height: 100vh;
+            }
+
+            body > div:first-child > * {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                margin: 0;
+
+                font-size: 20vh;
+                line-height: 33vh;
+            }
+
+            body > div:first-child > h1 {
+                font-size: 40vh;
             }
         </style>
     </head>
@@ -25,6 +51,8 @@
 
             const distance = debutDuProchainEvenement - aujourdhui;
             const distanceEnJours = Math.ceil(((((distance / 1000) / 60) / 60) / 24));
+
+            console.log("prout");
 
             texteNombreDeJoursAvantLEvenement.innerText = distanceEnJours;
         </script>
