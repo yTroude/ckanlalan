@@ -83,7 +83,7 @@
             const dureeUn = .2 * distanceEnJours;
             const dureeDeux = 3 * dureeUn;
             lelement.style.animationDuration = `${dureeUn}s, ${dureeDeux}s`;
-            lelement.style.animationDirection = distanceEnJours % 2 ? "normal" : "normal, reverse";
+            lelement.style.animationDirection = distanceEnJours % 2 ? "alternate" : "alternate, reverse";
         </script>
     </body>
 </html>
