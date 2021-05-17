@@ -67,23 +67,42 @@
 
         <script>
             const debutDuProchainEvenement = new Date('2021-08-13');
+            const finDuProchainEvenement = new Date('2021-08-22');
+            const aujourdhui = new Date();
+            
+            const distanceFinDevenement = finDuProchainEvenement - aujourdhui;
+            const distanceFinDevenementEnJours = Math.ceil(((((distanceFinDevenement / 1000) / 60) / 60) / 24));
+
+            // Fonctionnalitey impossible a tester avant la fin de l'eyveynement
+            // Peut-etre que ca cassera ¯\_(ツ)_/¯
+            if (distanceFinDevenementEnJours < 0 && window.location.hostname.indexOf("ckanlalan") !== 0) {
+                // Autre possibilite : /^(www.)?ckanlevenement.fun$/gi
+                window.location.href = "http://ckanlevenement.fun";
+            }
+
             const lelement = document.getElementById("texteNombreDeJoursAvantLEvenement");
             const lunitey = document.getElementById("texteUniteyDeTemps");
+
+            const distanceDebutEvenement = debutDuProchainEvenement - aujourdhui;
+            const distanceDebutEvenementEnJours = Math.ceil(((((distanceDebutEvenement / 1000) / 60) / 60) / 24));
             
-            const aujourdhui = new Date();
-
-            const distance = debutDuProchainEvenement - aujourdhui;
-            const distanceEnJours = Math.ceil(((((distance / 1000) / 60) / 60) / 24));
-
             console.warn("prout");
 
-            lelement.innerText = distanceEnJours;
-            lunitey.innerText = distanceEnJours <= 1 ? "jour": lunitey.innerText;
+            // Proprement testey
+            if (distanceDebutEvenementEnJours > 0) {
+                lelement.innerText = distanceDebutEvenementEnJours;
+                lunitey.innerText = distanceDebutEvenementEnJours <= 1 ? "jour": lunitey.innerText;
 
-            const dureeUn = .2 * distanceEnJours;
-            const dureeDeux = 3 * dureeUn;
-            lelement.style.animationDuration = `${dureeUn}s, ${dureeDeux}s`;
-            lelement.style.animationDirection = distanceEnJours % 2 ? "alternate" : "alternate, reverse";
+                const dureeUn = Math.abs(.2 * distanceDebutEvenementEnJours);
+                const dureeDeux = 3 * dureeUn;
+                lelement.style.animationDuration = `${dureeUn}s, ${dureeDeux}s`;
+                lelement.style.animationDirection = distanceDebutEvenementEnJours % 2 ? "alternate" : "alternate, reverse";
+            } else {
+                // Fonctionnalitey impossible a tester avant le debut de l'eyveynement
+                // Peut-etre que ca cassera ¯\_(ツ)_/¯
+                // TODO que fais-tu devant ton ecran plutot qu'a la batisse pauvre bougre
+                console.log("que fais-tu devant ton ecran plutot qu'a la batisse pauvre bougre");
+            }
         </script>
     </body>
 </html>
