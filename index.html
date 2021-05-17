@@ -4,12 +4,31 @@
         <meta charset="utf-8">
         <title>C kan la lan</title>
         <style type="text/css">
+            @keyframes animation-du-texte-au-milieu-de-lecran-opur-que-ca-grossisse {
+                from {
+                    font-size: 40vh;
+                }
+                to {
+                    font-size: 10vh;
+                }
+            }
+
+            @keyframes animation-du-texte-au-milieu-de-lecran-pour-que-ca-rotate {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
             body {
                 margin: 0;
                 padding: 0;
             }
 
-            body > div:first-child {
+            main {
+                overflow: hidden;
                 font-family: sans-serif;
 
                 display: flex;
@@ -19,7 +38,7 @@
                 height: 100vh;
             }
 
-            body > div:first-child > * {
+            main > * {
                 flex: 1;
                 display: flex;
                 align-items: center;
@@ -31,30 +50,40 @@
                 line-height: 33vh;
             }
 
-            body > div:first-child > h1 {
-                font-size: 40vh;
+            main > h1 {
+                /* font-size: 40vh; */
+                animation:
+                    animation-du-texte-au-milieu-de-lecran-opur-que-ca-grossisse .6s ease-in-out infinite alternate both,
+                    animation-du-texte-au-milieu-de-lecran-pour-que-ca-rotate 2s linear infinite;
             }
         </style>
     </head>
     <body>
-        <div>
+        <main>
             <h2>Dans</h2>
-            <h1>50</h1>
-            <h2>jours</h2>
-        </div>
+            <h1 id="texteNombreDeJoursAvantLEvenement">50</h1>
+            <h2 id="texteUniteyDeTemps">jours</h2>
+        </main>
 
         <script>
             const debutDuProchainEvenement = new Date('2021-08-13');
-            const texteNombreDeJoursAvantLEvenement = document.getElementsByTagName('h1')[0];
+            const lelement = document.getElementById("texteNombreDeJoursAvantLEvenement");
+            const lunitey = document.getElementById("texteUniteyDeTemps");
             
             const aujourdhui = new Date();
 
             const distance = debutDuProchainEvenement - aujourdhui;
             const distanceEnJours = Math.ceil(((((distance / 1000) / 60) / 60) / 24));
 
-            console.log("prout");
+            console.warn("prout");
 
-            texteNombreDeJoursAvantLEvenement.innerText = distanceEnJours;
+            lelement.innerText = distanceEnJours;
+            lunitey.innerText = distanceEnJours <= 1 ? "jour": lunitey.innerText;
+
+            const dureeUn = .2 * distanceEnJours;
+            const dureeDeux = 3 * dureeUn;
+            lelement.style.animationDuration = `${dureeUn}s, ${dureeDeux}s`;
+            lelement.style.animationDirection = distanceEnJours % 2 ? "normal" : "normal, reverse";
         </script>
     </body>
 </html>
