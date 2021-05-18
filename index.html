@@ -50,22 +50,84 @@
                 line-height: 33vh;
             }
 
-            main > h1 {
-                /* font-size: 40vh; */
+            main.cestCliquey > h1 {
                 animation:
                     animation-du-texte-au-milieu-de-lecran-opur-que-ca-grossisse .6s ease-in-out infinite alternate both,
                     animation-du-texte-au-milieu-de-lecran-pour-que-ca-rotate 2s linear infinite;
             }
+
+            div {
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+
+                background-color: white;
+                z-index: 10000;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            button {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                width: 90%;
+                height: 90%;
+                max-width: 90vh;
+                max-height: 90vw;
+
+                border-radius: 50%;
+                padding: 2%;
+                font-size: 18vh;
+                line-height: 18vh;
+                border: 5px solid darkgreen;
+                background-color: lightgreen;
+                overflow: hidden;
+                cursor: pointer;
+
+                transition: background-color ease-in-out .4s;
+            }
+
+            @media (max-aspect-ratio: 1/1) {
+                button {
+                    font-size: 18vw;
+                    line-height: 18vw;
+                }
+            }
+
+            button:hover {
+                background-color: darkgreen;
+            }
         </style>
     </head>
     <body>
-        <main>
+        <div id="laDivAsupprimer">
+            <button id="leBoutonQuilFautCliquer">Savoir C kan la LAN</button>
+        </div>
+
+        <main id="caCestLeMain">
             <h2>Dans</h2>
-            <h1 id="texteNombreDeJoursAvantLEvenement">50</h1>
+            <h1 id="texteNombreDeJoursAvantLEvenement"></h1>
             <h2 id="texteUniteyDeTemps">jours</h2>
         </main>
 
         <script>
+            const ladiv = document.getElementById("laDivAsupprimer");
+            const leboutton = document.getElementById("leBoutonQuilFautCliquer");
+            const lemain = document.getElementById("caCestLeMain");
+
+            const audioElement = new Audio('./la-symphonie-de-l-URSSAF.mp3');
+            audioElement.loop = "true";
+
+            leboutton.addEventListener("click", function(evt) {
+                evt.preventDefault();
+                lemain.className = "cestCliquey";
+                ladiv.parentElement.removeChild(ladiv);
+                audioElement.play();
+            }, false);
+
             const debutDuProchainEvenement = new Date('2021-08-13');
             const finDuProchainEvenement = new Date('2021-08-22');
             const aujourdhui = new Date();
@@ -76,7 +138,7 @@
             // Fonctionnalitey impossible a tester avant la fin de l'eyveynement
             // Peut-etre que ca cassera ¯\_(ツ)_/¯
             if (distanceFinDevenementEnJours < 0 && window.location.hostname.indexOf("ckanlalan") !== 0) {
-                // Autre possibilite : /^(www.)?ckanlevenement.fun$/gi
+                // Autre possibilite : /^(www.)?ckanlalan.fun$/gi
                 window.location.href = "http://ckanlevenement.fun";
             }
 
