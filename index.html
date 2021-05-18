@@ -155,6 +155,9 @@
                 lelement.innerText = distanceDebutEvenementEnJours;
                 lunitey.innerText = distanceDebutEvenementEnJours <= 1 ? "jour": lunitey.innerText;
 
+                audioElement.playbackRate = Math.max(4 - (4 / 100 * distanceDebutEvenementEnJours), 0.25);
+                audioElement.volume = 1 - (distanceDebutEvenementEnJours / 100);
+
                 const dureeUn = Math.abs(.2 * distanceDebutEvenementEnJours);
                 const dureeDeux = 3 * dureeUn;
                 lelement.style.animationDuration = `${dureeUn}s, ${dureeDeux}s`;
