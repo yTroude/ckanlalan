@@ -96,7 +96,7 @@
                 const dureeUn = Math.abs(.2 * distanceDebutEvenementEnJours);
                 const dureeDeux = 3 * dureeUn;
                 lelement.style.animationDuration = `${dureeUn}s, ${dureeDeux}s`;
-                lelement.style.animationDirection = distanceDebutEvenementEnJours % 2 ? "alternate" : "alternate, reverse";
+                lelement.style.animationDirection = distanceDebutEvenementEnJours % 2 ? "alternate, normal" : "alternate, reverse";
             } else {
                 // Fonctionnalitey impossible a tester avant le debut de l'eyveynement
                 // Peut-etre que ca cassera ¯\_(ツ)_/¯
