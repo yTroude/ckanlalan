@@ -5,6 +5,24 @@
         <title>C kan la lan</title>
         <link rel="icon" href="favicon.ico"/>
         <style type="text/css">
+            @keyframes animation-en-3D-pour-quand-ca-change-de-jour {
+                from {
+                    transform: rotate3D(1, 0, 0, 0deg);
+                }
+                to {
+                    transform: rotate3D(1, 0, 0, 360deg);
+                }
+            }
+
+            @keyframes animation-qui-fait-que-le-texte-il-sen-va-loin {
+                from {
+                    transform: scale(1);
+                }
+                to {
+                    transform: scale(0);
+                }
+            }
+
             @keyframes animation-du-texte-au-milieu-de-lecran-opur-que-ca-grossisse {
                 from {
                     font-size: 40vh;
@@ -62,7 +80,15 @@
                 line-height: 33vh;
             }
 
-            main > h1 {
+            #ceyCeydilleAReduit {
+                animation: animation-qui-fait-que-le-texte-il-sen-va-loin 6s infinite forwards;
+            }
+
+            #ceyCeydilleATourne {
+                animation: animation-en-3D-pour-quand-ca-change-de-jour 1s linear infinite;
+            }
+            
+            main h1 {
                 animation:
                     animation-du-texte-au-milieu-de-lecran-opur-que-ca-grossisse .6s ease-in-out infinite alternate both,
                     animation-du-texte-au-milieu-de-lecran-pour-que-ca-rotate 2s linear infinite;
@@ -116,7 +142,11 @@
 
         <main>
             <h2>Dans</h2>
-            <h1 id="texteNombreDeJoursAvantLEvenement"></h1>
+            <span id="ceyCeydilleATourne">
+                <span id="ceyCeydilleAReduit">
+                    <h1 id="texteNombreDeJoursAvantLEvenement"></h1>
+                </span>
+            </span>
             <h2 id="texteUniteyDeTemps">jours</h2>
         </main>
 
