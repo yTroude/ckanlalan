@@ -80,14 +80,22 @@
                 line-height: 33vh;
             }
 
-            #ceyCeydilleAReduit {
+            .ceyCeydilleAReduit {
                 animation: animation-qui-fait-que-le-texte-il-sen-va-loin 6s infinite forwards;
             }
 
-            #ceyCeydilleATourne {
+            .ceyCeydilleAReduitAlenvers {
+                animation: animation-qui-fait-que-le-texte-il-sen-va-loin 6s infinite reverse;
+            }
+
+            .ceyCeydilleATourne {
                 animation: animation-en-3D-pour-quand-ca-change-de-jour 1s linear infinite;
             }
             
+            .ceyCeydilleATourneAlenvers {
+                animation: animation-en-3D-pour-quand-ca-change-de-jour 1s linear infinite reverse;
+            }
+
             main h1 {
                 animation:
                     animation-du-texte-au-milieu-de-lecran-opur-que-ca-grossisse .6s ease-in-out infinite alternate both,
@@ -157,6 +165,108 @@
                 return Math.floor(Math.random() * (nombreMaximum - nombreMinimum) + nombreMinimum);
             }
 
+            function bouclePrincipale (debutDuProchainEvenement, finDuProchainEvenement, compteur, premiereFois = false) {
+                const aujourdhui = new Date();
+
+                const distanceFinDevenement = finDuProchainEvenement - aujourdhui;
+                const distanceFinDevenementEnJours = Math.ceil(((((distanceFinDevenement / 1000) / 60) / 60) / 24));
+
+                // Fonctionnalitey impossible a tester avant la fin de l'eyveynement
+                // Peut-etre que ca cassera ¯\_(ツ)_/¯
+                if (distanceFinDevenementEnJours < 0 && window.location.hostname.indexOf("ckanlalan") !== 0) {
+                    // Autre possibilite : /^(www.)?ckanlalan.fun$/gi
+                    window.location.href = "http://ckanlevenement.fun";
+                }
+
+                const lelement = document.getElementById("texteNombreDeJoursAvantLEvenement");
+                const lunitey = document.getElementById("texteUniteyDeTemps");
+
+                const distanceDebutEvenement = debutDuProchainEvenement - aujourdhui;
+                // const distanceDebutEvenementEnJours = Math.ceil(((((distanceDebutEvenement / 1000) / 60) / 60) / 24));
+                const distanceDebutEvenementEnJours = compteur[0]--;
+                
+                // Déblogueur point attention : [bruit de pet]
+                console.warn("prout");
+
+                // Animation du bouton après un délai
+                const dureeDeLanimation = Math.min(2000, distanceDebutEvenementEnJours * 100);
+
+                leBouton.style.transitionDuration = dureeDeLanimation + "ms";
+                leBouton.style.animationDuration = dureeDeLanimation * 10 + "ms";
+
+                window.setTimeout(function() {
+                    leBouton.className = "animationAllumey";
+                }, dureeDeLanimation * 5);
+
+                window.setInterval(function() {
+                    leBouton.style.opacity = 0;
+
+                    let topPos = obtenirUnNombreEntierAleatoire(0, 90);
+                    let leftPos = obtenirUnNombreEntierAleatoire(0, 90); 
+
+                    window.setTimeout(function(topPosArg, leftPosPosArg) {
+                        leBouton.style.opacity = 1;
+                        leBouton.style.top = topPosArg + "%";
+                        leBouton.style.left = leftPosPosArg + "%";
+                    }, dureeDeLanimation, topPos, leftPos);               
+                }, dureeDeLanimation * 4);
+
+                // Proprement testey
+                if (distanceDebutEvenementEnJours > 0) {
+                    leBolero.playbackRate = Math.max(2 - (2 / 100 * distanceDebutEvenementEnJours), 0.25);
+                    leBolero.volume = 1 - (distanceDebutEvenementEnJours / 100);
+
+                    const dureeUn = Math.abs(.2 * distanceDebutEvenementEnJours);
+                    const dureeDeux = 3 * dureeUn;
+                    lelement.style.animationDuration = `${dureeUn}s, ${dureeDeux}s`;
+                    lelement.style.animationDirection = distanceDebutEvenementEnJours % 2 ? "alternate, normal" : "alternate, reverse";
+
+                    if (!premiereFois) {
+                        document.getElementById("ceyCeydilleAReduit").className = "ceyCeydilleAReduit";
+                        document.getElementById("ceyCeydilleATourne").className = "ceyCeydilleATourne";
+
+                        setTimeout(() => {
+                            document.getElementById("ceyCeydilleATourne").style.animation = "animation-en-3D-pour-quand-ca-change-de-jour 1s linear infinite reverse;";
+                            document.getElementById("ceyCeydilleAReduit").style.animation = "animation-qui-fait-que-le-texte-il-sen-va-loin 6s infinite reverse";
+
+                            lelement.innerText = distanceDebutEvenementEnJours;
+                            lunitey.innerText = distanceDebutEvenementEnJours <= 1 ? "jour" : lunitey.innerText;
+
+                            setTimeout(() => {
+                                document.getElementById("ceyCeydilleAReduit").className = "";
+                                document.getElementById("ceyCeydilleATourne").className = "";
+                            }, 6000);
+                        }, 6000)
+                    } else {
+                        lelement.innerText = distanceDebutEvenementEnJours;
+                        lunitey.innerText = distanceDebutEvenementEnJours <= 1 ? "jour" : lunitey.innerText;
+                    }
+                } else {
+                    // Fonctionnalitey impossible a tester avant le debut de l'eyveynement
+                    // Peut-etre que ca cassera ¯\_(ツ)_/¯
+                    // TODO que fais-tu devant ton ecran plutot qu'a la batisse pauvre bougre
+                    console.log("que fais-tu devant ton ecran plutot qu'a la batisse pauvre bougre");
+                }
+            }
+
+            function obtenirMsJusquaDemain() {
+                const maintenant = new Date();
+                const demain = new Date();
+                // demain.setHours(0,0,0,0);
+                // demain.setDate(maintenant.getDate() + 1);
+                demain.setSeconds(maintenant.getSeconds() + 20);
+
+                return demain - maintenant;
+            }
+
+            function lancerLeChronoJusquaDemain(compteur) {
+                setTimeout(() => {
+                    bouclePrincipale(debutDuProchainEvenement, finDuProchainEvenement, compteur);
+                    lancerLeChronoJusquaDemain(compteur);
+                }, obtenirMsJusquaDemain()); 
+                // Relire l'event loop, on a treys peu de chance de tomber sur la milliseconde qui est encore aujourd'hui. Pas besoin donc d'ajouter une seycuritey de une milliseconde.
+            }
+
             // Lecture de la gigue des communistes
             const leBouton = document.getElementById("leBouton");
             const leBolero = new Audio('./la-symphonie-de-l-URSSAF.mp3');
@@ -168,93 +278,12 @@
             }, false);
 
             // Calcul des dates
+            let compteur = [100];
             const debutDuProchainEvenement = new Date('2021-08-13T00:00:00');
             const finDuProchainEvenement = new Date('2021-08-22T00:00:00');
-            const aujourdhui = new Date();
 
-            const distanceFinDevenement = finDuProchainEvenement - aujourdhui;
-            const distanceFinDevenementEnJours = Math.ceil(((((distanceFinDevenement / 1000) / 60) / 60) / 24));
-
-            // Fonctionnalitey impossible a tester avant la fin de l'eyveynement
-            // Peut-etre que ca cassera ¯\_(ツ)_/¯
-            if (distanceFinDevenementEnJours < 0 && window.location.hostname.indexOf("ckanlalan") !== 0) {
-                // Autre possibilite : /^(www.)?ckanlalan.fun$/gi
-                window.location.href = "http://ckanlevenement.fun";
-            }
-
-            const lelement = document.getElementById("texteNombreDeJoursAvantLEvenement");
-            const lunitey = document.getElementById("texteUniteyDeTemps");
-
-            const distanceDebutEvenement = debutDuProchainEvenement - aujourdhui;
-            const distanceDebutEvenementEnJours = Math.ceil(((((distanceDebutEvenement / 1000) / 60) / 60) / 24));
-            
-            // Déblogueur point attention : [bruit de pet]
-            console.warn("prout");
-
-            // Animation du bouton après un délai
-            const dureeDeLanimation = Math.min(2000, distanceDebutEvenementEnJours * 100);
-
-            leBouton.style.transitionDuration = dureeDeLanimation + "ms";
-            leBouton.style.animationDuration = dureeDeLanimation * 10 + "ms";
-
-            window.setTimeout(function() {
-                leBouton.className = "animationAllumey";
-            }, dureeDeLanimation * 5);
-
-            window.setInterval(function() {
-                leBouton.style.opacity = 0;
-
-                let topPos = obtenirUnNombreEntierAleatoire(0, 90);
-                let leftPos = obtenirUnNombreEntierAleatoire(0, 90); 
-
-                window.setTimeout(function(topPosArg, leftPosPosArg) {
-                    leBouton.style.opacity = 1;
-                    leBouton.style.top = topPosArg + "%";
-                    leBouton.style.left = leftPosPosArg + "%";
-                }, dureeDeLanimation, topPos, leftPos);               
-            }, dureeDeLanimation * 4);
-
-            // Proprement testey
-            if (distanceDebutEvenementEnJours > 0) {
-                lelement.innerText = distanceDebutEvenementEnJours;
-                lunitey.innerText = distanceDebutEvenementEnJours <= 1 ? "jour" : lunitey.innerText;
-
-                leBolero.playbackRate = Math.max(2 - (2 / 100 * distanceDebutEvenementEnJours), 0.25);
-                leBolero.volume = 1 - (distanceDebutEvenementEnJours / 100);
-
-                const dureeUn = Math.abs(.2 * distanceDebutEvenementEnJours);
-                const dureeDeux = 3 * dureeUn;
-                lelement.style.animationDuration = `${dureeUn}s, ${dureeDeux}s`;
-                lelement.style.animationDirection = distanceDebutEvenementEnJours % 2 ? "alternate, normal" : "alternate, reverse";
-            } else {
-                // Fonctionnalitey impossible a tester avant le debut de l'eyveynement
-                // Peut-etre que ca cassera ¯\_(ツ)_/¯
-                // TODO que fais-tu devant ton ecran plutot qu'a la batisse pauvre bougre
-                console.log("que fais-tu devant ton ecran plutot qu'a la batisse pauvre bougre");
-            }
-
-            function obtenirMsJusquaDemain() {
-                const maintenant = new Date();
-                const demain = new Date();
-                demain.setHours(0,0,0,0);
-                demain.setDate(aujourdhui.getDate() + 1);
-
-                console.log(maintenant);
-                console.log(demain);
-                console.log(demain - maintenant);
-
-                return demain - maintenant;
-            }
-
-            function lancerLeChronoJusquaDemain() {
-                setTimeout(() => {
-                    // AFAIRE inclure les bails
-                    lancerLeChronoJusquaDemain();
-                }, obtenirMsJusquaDemain()); 
-                // Relire l'event loop, on a treys peu de chance de tomber sur la milliseconde qui est encore aujourd'hui. Pas besoin donc d'ajouter une seycuritey de une milliseconde.
-            }
-
-            lancerLeChronoJusquaDemain();
+            lancerLeChronoJusquaDemain(compteur);
+            bouclePrincipale(debutDuProchainEvenement, finDuProchainEvenement, compteur, true);
         </script>
     </body>
 </html>
