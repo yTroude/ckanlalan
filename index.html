@@ -232,6 +232,29 @@
                 // TODO que fais-tu devant ton ecran plutot qu'a la batisse pauvre bougre
                 console.log("que fais-tu devant ton ecran plutot qu'a la batisse pauvre bougre");
             }
+
+            function obtenirMsJusquaDemain() {
+                const maintenant = new Date();
+                const demain = new Date();
+                demain.setHours(0,0,0,0);
+                demain.setDate(aujourdhui.getDate() + 1);
+
+                console.log(maintenant);
+                console.log(demain);
+                console.log(demain - maintenant);
+
+                return demain - maintenant;
+            }
+
+            function lancerLeChronoJusquaDemain() {
+                setTimeout(() => {
+                    // AFAIRE inclure les bails
+                    lancerLeChronoJusquaDemain();
+                }, obtenirMsJusquaDemain()); 
+                // Relire l'event loop, on a treys peu de chance de tomber sur la milliseconde qui est encore aujourd'hui. Pas besoin donc d'ajouter une seycuritey de une milliseconde.
+            }
+
+            lancerLeChronoJusquaDemain();
         </script>
     </body>
 </html>
