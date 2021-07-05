@@ -255,6 +255,58 @@
             }
 
             lancerLeChronoJusquaDemain();
+            
+            // designation de la chaîne magique du code Konami
+            var laListeDesTouchesMagiques = {
+                37: 'left',
+                38: 'up',
+                39: 'right',
+                40: 'down',
+                65: 'a',
+                66: 'b'
+            };
+
+            // la série officielle de combinaisons de touches à réaliser pour le code Konami
+            var leCodeKonami = ['up', 'up', 'down', 'down', 'left', 'right', 'left', 'right', 'b', 'a'];
+			
+			// commentaire a propos du curseur
+            // la position du curseur dans le code konami
+			var positionDuCurseurDansLeCodeKonami = 0;
+			// fin de commentaire a propos du curseur
+
+			// ajout d'un écouteur d'évènement pour touche pressée
+			document.addEventListener('keydown', function(e) {
+				var touche = laListeDesTouchesMagiques[e.keyCode];
+				var toucheRequise = leCodeKonami[positionDuCurseurDansLeCodeKonami];
+			
+				// comparaison de la banane avec le jus de fruit
+				if (touche == toucheRequise) {
+
+					// tu avances tu avances tu recules
+					positionDuCurseurDansLeCodeKonami++;
+
+					// comment veux tu comment veux tu que attendez j'en suis où là ?
+					// A_FAIRE : nettoyer les commentaires
+					if (positionDuCurseurDansLeCodeKonami == leCodeKonami.length) {
+						immersionDeLastronef();
+						positionDuCurseurDansLeCodeKonami = 0;
+					}
+				} else {
+					positionDuCurseurDansLeCodeKonami = 0;
+				}
+			});
+			// AFAIRE : peut-être adapter le contenu pour les téléphones-malins, mais bon personne n'en utilise ¯\_(ツ)_/¯
+			// fonctionnalité non prévue mais agréable : on peut répeter l'opération pour faire comme les quatre quatre saisons
+			function immersionDeLastronef() {
+                console.warn('Vilain tricheur');
+				document.body.style.backgroundImage = "url('perdu.jpg')";
+				
+				document.getElementsByTagName("main")[0].innerHTML = "<h4 id=\"maisOuEstDoncOrNiPorc\" style=\"color:cyan; font-size:7vh;\"> LE PETIT PORC DE PECHE EST DEMANDE A L'ACCUEIL </h2>";
+						
+				leBolero.pause();
+				var laNouvelleMusiqueTropHype = new Audio('motoAmazon.mp3');
+				laNouvelleMusiqueTropHype.play();
+			}
         </script>
     </body>
 </html>
