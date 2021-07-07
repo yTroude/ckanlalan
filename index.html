@@ -129,12 +129,16 @@
 
             // Lecture de la gigue des communistes
             const leBouton = document.getElementById("leBouton");
-            const leBolero = new Audio('./la-symphonie-de-l-URSSAF.mp3');
-            leBolero.loop = "true";
+            const lesBoleros = [];
             document.addEventListener("click", function(evt) {
                 evt.preventDefault();
-                leBouton.parentElement.removeChild(leBouton);
+                if (leBouton && leBouton.parentElement) {
+                    leBouton.parentElement.removeChild(leBouton);
+                }
+                const leBolero = new Audio('./la-symphonie-de-l-URSSAF.mp3');
+                leBolero.loop = "true";
                 leBolero.play();
+                lesBoleros.push(leBolero);
             }, false);
 
             // Calcul des dates
@@ -189,8 +193,10 @@
                 lelement.innerText = distanceDebutEvenementEnJours;
                 lunitey.innerText = distanceDebutEvenementEnJours <= 1 ? "jour" : lunitey.innerText;
 
-                leBolero.playbackRate = Math.max(2 - (2 / 100 * distanceDebutEvenementEnJours), 0.25);
-                leBolero.volume = 1 - (distanceDebutEvenementEnJours / 100);
+                lesBoleros.forEach(unBolero => {
+                    unBolero.playbackRate = Math.max(2 - (2 / 100 * distanceDebutEvenementEnJours), 0.25);
+                    unBolero.volume = 1 - (distanceDebutEvenementEnJours / 100);
+                });
 
                 const dureeUn = Math.abs(.2 * distanceDebutEvenementEnJours);
                 const dureeDeux = 3 * dureeUn;
