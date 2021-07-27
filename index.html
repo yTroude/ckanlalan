@@ -203,24 +203,26 @@
 
             // Proprement testey
             if (distanceDebutEvenementEnJours > 0) {
-            //     let premierJour = document.getElementById('premier-jour');
-            //     if (premierJour) {
-            //         premierJour.parentElement.removeChild(premierJour);
-            //     }
+                let premierJour = document.getElementById('premier-jour');
+                if (premierJour) {
+                    premierJour.parentElement.removeChild(premierJour);
+                }
 
-            //     lelement.innerText = distanceDebutEvenementEnJours;
-            //     lunitey.innerText = distanceDebutEvenementEnJours <= 1 ? "jour" : lunitey.innerText;
+                lelement.innerText = distanceDebutEvenementEnJours;
+                lunitey.innerText = distanceDebutEvenementEnJours <= 1 ? "jour" : lunitey.innerText;
 
-            //     lesBoleros.forEach(unBolero => {
-            //         unBolero.playbackRate = Math.max(2 - (2 / 100 * distanceDebutEvenementEnJours), 0.25);
-            //         unBolero.volume = 1 - (distanceDebutEvenementEnJours / 100);
-            //     });
+                lesBoleros.forEach(unBolero => {
+                    unBolero.playbackRate = Math.max(2 - (2 / 100 * distanceDebutEvenementEnJours), 0.25);
+                    unBolero.volume = 1 - (distanceDebutEvenementEnJours / 100);
+                });
 
-            //     const dureeUn = Math.abs(.2 * distanceDebutEvenementEnJours);
-            //     const dureeDeux = 3 * dureeUn;
-            //     lelement.style.animationDuration = `${dureeUn}s, ${dureeDeux}s`;
-            //     lelement.style.animationDirection = distanceDebutEvenementEnJours % 2 ? "alternate, normal" : "alternate, reverse";
-            // } else if (distanceDebutEvenementEnJours === 0) {
+                const dureeUn = Math.abs(.2 * distanceDebutEvenementEnJours);
+                const dureeDeux = 3 * dureeUn;
+                lelement.style.animationDuration = `${dureeUn}s, ${dureeDeux}s`;
+                lelement.style.animationDirection = distanceDebutEvenementEnJours % 2 ? "alternate, normal" : "alternate, reverse";
+            } else if (distanceDebutEvenementEnJours === 0) {
+                // Fonctionnalitey impossible a tester avant le debut de l'eyveynement
+                // Peut-etre que ca cassera ¯\_(ツ)_/¯
                 let avant = document.getElementById('avant');
                 if (avant) {
                     avant.parentElement.removeChild(avant);
