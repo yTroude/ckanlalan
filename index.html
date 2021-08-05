@@ -284,7 +284,6 @@
 
             // Lecture de la gigue des communistes
             const leBouton = document.getElementById("leBouton");
-            const lesBoleros = [];
             document.addEventListener("click", function(evt) {
                 evt.preventDefault();
                 if (leBouton && leBouton.parentElement) {
@@ -292,8 +291,9 @@
                 }
                 const leBolero = new Audio('./la-symphonie-de-l-URSSAF.mp3');
                 leBolero.loop = "true";
+                leBolero.playbackRate = Math.max(2 - (2 / 100 * distanceDebutEvenementEnJours), 0.25);
+                leBolero.volume = 1 - (distanceDebutEvenementEnJours / 100);
                 leBolero.play();
-                lesBoleros.push(leBolero);
             }, false);
 
             // Calcul des dates
@@ -353,18 +353,15 @@
                 lelement.innerText = distanceDebutEvenementEnJours;
                 lunitey.innerText = distanceDebutEvenementEnJours <= 1 ? "jour" : lunitey.innerText;
 
-                lesBoleros.forEach(unBolero => {
-                    unBolero.playbackRate = Math.max(2 - (2 / 100 * distanceDebutEvenementEnJours), 0.25);
-                    unBolero.volume = 1 - (distanceDebutEvenementEnJours / 100);
-                });
-
                 const dureeUn = Math.abs(.2 * distanceDebutEvenementEnJours);
                 const dureeDeux = 3 * dureeUn;
                 lelement.style.animationDuration = `${dureeUn}s, ${dureeDeux}s`;
                 lelement.style.animationDirection = distanceDebutEvenementEnJours % 2 ? "alternate, normal" : "alternate, reverse";
-            } else if (distanceDebutEvenementEnJours === 0) {
+            } else {
                 // Fonctionnalitey impossible a tester avant le debut de l'eyveynement
                 // Peut-etre que ca cassera ¯\_(ツ)_/¯
+                console.log("que fais-tu devant ton ecran plutot qu'a la batisse pauvre bougre");
+
                 let avant = document.getElementById('avant');
                 if (avant) {
                     avant.parentElement.removeChild(avant);
@@ -395,11 +392,6 @@
                 }
 
                 setInterval(appliquerLOrgieDesCouleurs, 150);
-            } else {
-                // Fonctionnalitey impossible a tester avant le debut de l'eyveynement
-                // Peut-etre que ca cassera ¯\_(ツ)_/¯
-                // TODO que fais-tu devant ton ecran plutot qu'a la batisse pauvre bougre
-                console.log("que fais-tu devant ton ecran plutot qu'a la batisse pauvre bougre");
             }
 
             var listening = true;
