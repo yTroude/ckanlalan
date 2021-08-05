@@ -111,7 +111,122 @@
 
                 background-color: black;
             }
+
+
+            #principal {
+                position: absolute;
+                top: 0%; left: 0;
+                width: 100vw;
+                height: 100vh;
+            }
+            #smiley {
+                z-index: 200;
+                position: absolute;
+                bottom: 50%; left: 50%;
+                width: 40vh; height: 40vh;
+                transform: translate(-50%) scale(0);
+                border-radius: 50%;
+                border: 6px solid #323031;
+                background-color: #fff;
+            }
+            .neunoeil {
+                z-index: 300;
+                position: absolute;
+                top: 28%;
+                width: 20%; height: 20%;
+                border-radius: 50%;
+                border: 2px solid #323031;
+                background-color: #323031;
+            }
+            .neunoeil::after {
+                content: "";
+                position: absolute;
+                border-radius: 50%;
+                width: 60%; height: 60%;
+                top: 50%;
+                transform: translate(0%, -50%);
+                background-color: whitesmoke;
+            }
+            .neunoeil.gauche {
+                right: 55%;
+            }
+            .neunoeil.gauche::after {
+                left: 30%;
+            }
+            .neunoeil.droit {
+                left: 55%;
+            }
+            .neunoeil.droit::after {
+                right: 30%;
+            }
+            .hand {
+                z-index: 400;
+                transform: scale(0);
+                position: absolute;
+                top: 50%;
+                width: 28vh;
+            }
+            @media (max-aspect-ratio: 1/1) {
+                .hand {
+                    width: 28vw;
+                }
+                #smiley {
+                    width: 40vw; height: 40vw;
+                }
+            }
+            .fist {
+                position: relative;
+                top: 0; left: 0;
+                width: 100%;
+            }
+            img {
+                width: 100%;
+            }
+            #right-hand {
+                right: 55%;
+            }
+            #left-hand {
+                left: 55%;
+            }
+            .fuck {
+                transform: 
+                    perspective(900px)
+                    rotateX(-80deg)
+                    translateY(65%);
+                opacity: .01;
+                width: 30.32%;
+            }
+            #right-hand .fuck {
+                position: absolute;
+                top: 32%;
+                left: 36%;
+            }
+            #left-hand .fuck {
+                position: absolute;
+                top: 32%;
+                right: 36%;
+            }
+            .chebou {
+                z-index: 100;
+                position: absolute;
+                top: 50%; left: 50%;
+                transform: translate(-50%, -50%);
+                border-radius: 50%;
+                border: 4px solid #323031;
+                width: 60%; height: 60%;
+            }
+            .chebou::before {
+                content: "";
+                position: absolute;
+                top: -5px;
+                left: -5px;
+                background-color: white;
+                width: 110%;
+                height: 60%;
+                border-radius: 50% 50% 0% 0%;
+            }
         </style>
+        <script type="text/javascript" src="konami.js"></script>
     </head>
     <body>
         <div id="avant">
@@ -133,6 +248,32 @@
         <h1 id="premier-jour">
 
         </h1>
+
+        <div id="principal">
+            <div id="smiley">
+                <div class="neunoeil gauche"></div>
+                <div class="neunoeil droit"></div>
+                <div class="chebou"></div>
+            </div>
+            
+            <div id="right-hand" class="hand">
+                <div class="fist">
+                    <img src="./img/right-hand-front-tatoo.png" alt="alt" />
+                </div>
+                <div class="fuck">
+                    <img src="./img/right-fist-down.png" alt="alt" />
+                </div>
+            </div>
+
+            <div id="left-hand" class="hand">
+                <div class="fist">
+                    <img src="./img/left-hand-front-tatoo.png" alt="alt" />
+                </div>
+                <div class="fuck">
+                    <img src="./img/left-fist-down.png" alt="alt" />
+                </div>
+            </div>
+        </div>
 
         <script>
             "use strict";
@@ -259,6 +400,194 @@
                 // Peut-etre que ca cassera ¯\_(ツ)_/¯
                 // TODO que fais-tu devant ton ecran plutot qu'a la batisse pauvre bougre
                 console.log("que fais-tu devant ton ecran plutot qu'a la batisse pauvre bougre");
+            }
+
+            var listening = true;
+
+            var leConteneur = document.getElementById("principal");
+            var laTete = document.getElementById("smiley");
+            var laMainDroite = document.getElementById("right-hand");
+            var laMainGauche = document.getElementById("left-hand");
+            var lesMains = document.getElementsByClassName('hand');
+            var lesFucks = document.getElementsByClassName('fuck');
+
+            var easter_egg = new Konami(lancerAnimation);
+
+            //document.addEventListener('click', lancerAnimation, false);
+
+            function lancerAnimation() {
+
+                
+                if(!listening) {
+                    return;
+                }
+                listening = false;
+
+                // Remise à zéro des animations
+                var razOptions = {duration: 0, fill: "forwards"};
+                leConteneur.animate([{top: "0%"}], razOptions);
+                laTete.animate([{ transform: 'translate(-50%) scale(0)'}], razOptions);
+                laMainDroite.animate([{ transform: 'rotate(360deg) scale(0)' }], razOptions);
+                laMainGauche.animate([{ transform: 'rotate(0deg) scale(0)' }], razOptions);
+                for (let i = 0; i < lesFucks.length; i++) {
+                    let unFuck = lesFucks[i];
+                    unFuck.animate([{ transform: 'perspective(900px) rotateX(-80deg) translateY(65%)', opacity: '.01' }], razOptions);
+                }
+
+                // Animation de la tete qui grossit
+                var faireGrossirTete = [
+                  { transform: 'translate(-50%) scale(0)'},
+                  { transform: 'translate(-50%) scale(1)'}
+                ];
+
+                var faireGrossirTeteOptions = {
+                  duration: 400,
+                  fill: "forwards",
+                  easing: "ease-in",
+                  endDelay: 2000
+                };
+                
+                var animationDeLaTete = laTete.animate(faireGrossirTete, faireGrossirTeteOptions);
+
+                animationDeLaTete.addEventListener('finish', function(evt) {
+                    // Animation des mains qui grossissent
+                    var faireGrossirMainDroite = [
+                      { transform: 'rotate(360deg) scale(0)' },
+                      { transform: 'rotate(360deg) scale(1)' }
+                    ];
+
+                    var faireGrossirMainDroiteOptions = {
+                      duration: 400,
+                      fill: "forwards",
+                      easing: "ease-in"
+                    };
+
+                    var animationDeLaMainDroite = laMainDroite.animate(faireGrossirMainDroite, faireGrossirMainDroiteOptions);
+
+                    animationDeLaMainDroite.addEventListener('finish', function(evt) {
+                        var faireGrossirMainGauche = [
+                          { transform: 'rotate(0deg) scale(0)'},
+                          { transform: 'rotate(0deg) scale(1)'}
+                        ];
+
+                        var faireGrossirMainGaucheOptions = {
+                          duration: 400,
+                          fill: "forwards",
+                          easing: "ease-in",
+                          endDelay: 2800
+                        };
+
+                        var animationDeLaMainGauche = laMainGauche.animate(faireGrossirMainGauche, faireGrossirMainGaucheOptions);
+
+                        animationDeLaMainGauche.addEventListener('finish', function(evt) {
+                            // Animation des mains qui rotate
+                            var rotater = [
+                              { transform: 'rotate(180deg)'}
+                            ];
+
+                            var rotaterOptions = {
+                              duration: 4800,
+                              fill: "forwards",
+                              easing: "cubic-bezier(0.9, -0.1, 1, 0.2)",
+                              endDelay: 400
+                            };
+
+                            var lanimation;
+
+                            for (let i = 0; i < lesMains.length; i++) {
+                                let laMain = lesMains[i];
+                                lanimation = laMain.animate(rotater, rotaterOptions);
+                            }
+
+                            lanimation.addEventListener('finish', function(evt) {
+                                // Animation des fucks
+                                var faireUnFuck = [
+                                  { transform: 'perspective(900px) rotateX(-80deg) translateY(65%)', opacity: '.01' },
+                                  { opacity: '1', offset: 0.3 },
+                                  { transform: 'perspective(900px) rotate(0deg) translateY(50%)', opacity: '1' }
+                                ];
+
+                                var faireUnFuckOptions = {
+                                  duration: 200,
+                                  fill: "forwards",
+                                  easing: "ease-in-out",
+                                  endDelay: 1000
+                                };
+
+                                var leFuckAnimation;
+
+                                for (let i = 0; i < lesFucks.length; i++) {
+                                    let unFuck = lesFucks[i];
+                                    leFuckAnimation = unFuck.animate(faireUnFuck, faireUnFuckOptions);
+                                }
+
+                                leFuckAnimation.addEventListener('finish', function(evt) {
+                                    var upAndDown = [
+                                      { top: "50%" },
+                                      { top: "70%" },
+                                      { top: "30%" }
+                                    ];
+
+                                    var upAndDownOptions = {
+                                      duration: 400,
+                                      direction: "alternate",
+                                      easing: "ease-in-out",
+                                      iterations: Infinity
+                                    }
+                                    var upAndDownDeuxOptions = {
+                                      duration: 400,
+                                      direction: "alternate",
+                                      easing: "ease-in-out",
+                                      iterations: Infinity,
+                                      delay: 200
+                                    }
+
+                                    laMainDroite.animate(upAndDown, upAndDownOptions);
+                                    laMainGauche.animate(upAndDown, upAndDownDeuxOptions);
+
+                                    var mainDown = [
+                                      { top: "0%" },
+                                      { top: "100%" }
+                                    ];
+
+                                    var mainDownOptions = {
+                                      duration: 10000,
+                                      fill: "forwards",
+                                      delay: 2000
+                                    }
+
+                                    var animationDuMain = leConteneur.animate(mainDown, mainDownOptions);
+
+                                    animationDuMain.addEventListener("finish", function(evt) {
+                                        var quickUpDown = [
+                                          { top: "50%" },
+                                          { top: "-40%", offset: .25 },
+                                          { top: "-40%", offset: .75 },
+                                          { top: "50%" }
+                                        ];
+
+                                        var quickUpDownOptions = {
+                                          duration: 2400,
+                                          easing: "ease-in-out",
+                                          fill: "forwards"
+                                        }
+
+                                        var laFin;
+
+                                        for (let i = 0; i < lesMains.length; i++) {
+                                            let laMain = lesMains[i];
+                                            laFin = laMain.animate(quickUpDown, quickUpDownOptions);
+
+                                            laFin.addEventListener("finish", function(evt) {
+                                                listening = true;
+                                            }, false);
+                                        }
+                                    }, false);
+                                }, false);
+                            }, false);
+                        }, false);
+                    }, false);
+                }, false);
             }
         </script>
     </body>
