@@ -119,7 +119,7 @@
                 width: 100vw;
                 height: 100vh;
             }
-            #smiley {
+            #sourirey {
                 z-index: 200;
                 position: absolute;
                 bottom: 50%; left: 50%;
@@ -159,7 +159,7 @@
             .neunoeil.droit::after {
                 right: 30%;
             }
-            .hand {
+            .mimine {
                 z-index: 400;
                 transform: scale(0);
                 position: absolute;
@@ -167,14 +167,14 @@
                 width: 28vh;
             }
             @media (max-aspect-ratio: 1/1) {
-                .hand {
+                .mimine {
                     width: 28vw;
                 }
-                #smiley {
+                #sourirey {
                     width: 40vw; height: 40vw;
                 }
             }
-            .fist {
+            .poing {
                 position: relative;
                 top: 0; left: 0;
                 width: 100%;
@@ -182,13 +182,13 @@
             img {
                 width: 100%;
             }
-            #right-hand {
+            #mimine-droite {
                 right: 55%;
             }
-            #left-hand {
+            #mimine-gauche {
                 left: 55%;
             }
-            .fuck {
+            .baise {
                 transform: 
                     perspective(900px)
                     rotateX(-80deg)
@@ -196,12 +196,12 @@
                 opacity: .01;
                 width: 30.32%;
             }
-            #right-hand .fuck {
+            #mimine-droite .baise {
                 position: absolute;
                 top: 32%;
                 left: 36%;
             }
-            #left-hand .fuck {
+            #mimine-gauche .baise {
                 position: absolute;
                 top: 32%;
                 right: 36%;
@@ -250,26 +250,26 @@
         </h1>
 
         <div id="principal">
-            <div id="smiley">
+            <div id="sourirey">
                 <div class="neunoeil gauche"></div>
                 <div class="neunoeil droit"></div>
                 <div class="chebou"></div>
             </div>
             
-            <div id="right-hand" class="hand">
-                <div class="fist">
+            <div id="mimine-droite" class="mimine">
+                <div class="poing">
                     <img src="./img/right-hand-front-tatoo.png" alt="alt" />
                 </div>
-                <div class="fuck">
+                <div class="baise">
                     <img src="./img/right-fist-down.png" alt="alt" />
                 </div>
             </div>
 
-            <div id="left-hand" class="hand">
-                <div class="fist">
+            <div id="mimine-gauche" class="mimine">
+                <div class="poing">
                     <img src="./img/left-hand-front-tatoo.png" alt="alt" />
                 </div>
-                <div class="fuck">
+                <div class="baise">
                     <img src="./img/left-fist-down.png" alt="alt" />
                 </div>
             </div>
@@ -405,19 +405,19 @@
             var listening = true;
 
             var leConteneur = document.getElementById("principal");
-            var laTete = document.getElementById("smiley");
-            var laMainDroite = document.getElementById("right-hand");
-            var laMainGauche = document.getElementById("left-hand");
-            var lesMains = document.getElementsByClassName('hand');
-            var lesFucks = document.getElementsByClassName('fuck');
+            var laTete = document.getElementById("sourirey");
+            var laMainDroite = document.getElementById("mimine-droite");
+            var laMainGauche = document.getElementById("mimine-gauche");
+            var lesMains = document.getElementsByClassName('mimine');
+            var lesFucks = document.getElementsByClassName('baise');
 
-            var easter_egg = new Konami(lancerAnimation);
+            var œuf_de_pâques = new Konami(lancerAnimation);
 
+            // au cas ou
             //document.addEventListener('click', lancerAnimation, false);
 
             function lancerAnimation() {
 
-                
                 if(!listening) {
                     return;
                 }
